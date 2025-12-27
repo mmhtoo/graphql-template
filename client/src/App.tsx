@@ -1,35 +1,76 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Fragment } from "react/jsx-runtime";
+import {
+  useCreateBookMutation,
+  useGetBooksQuery,
+  useOnCreatedBookSubscription,
+} from "./generated/graphql";
+import { getBooks } from "./graphql/operations";
+import { useEffect } from "react";
 
-function App() {
-  const [count, setCount] = useState(0)
+let total = 0;
+const max = 2;
+
+export default function App() {
+  const { data: booksRes, loading, refetch } = useGetBooksQuery();
+  const [createBook, { loading: isLoadingCreateBook }] = useCreateBookMutation({
+    refetchQueries: [
+      {
+        query: getBooks,
+      },
+    ],
+  });
+
+  useEffect(() => {
+    // const interval = setInterval(async () => {
+    //   if (total < max) {
+    //     await createBook({
+    //       variables: {
+    //         input: {
+    //           title: `Book ${total + 1}`,
+    //           author: `Author ${total + 1}`,
+    //         },
+    //       },
+    //     });
+    //     total++;
+    //   } else {
+    //     clearInterval(interval);
+    //   }
+    // }, 3000);
+    // return () => clearInterval(interval);
+  }, []);
+
+  useOnCreatedBookSubscription({
+    onData: ({ data: { data: resPayload } }) => {
+      console.log(resPayload);
+      if (resPayload) {
+        refetch();
+        alert(JSON.stringify(resPayload, null, 2));
+      }
+    },
+  });
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <Fragment>
+      <button
+        onClick={() => {
+          createBook({
+            variables: {
+              input: {
+                title: `Book ${++total}`,
+                author: `Author ${++total}`,
+              },
+            },
+          });
+        }}
+        disabled={isLoadingCreateBook}
+      >
+        {isLoadingCreateBook ? "Loading..." : "Create book"}
+      </button>
+      {loading ? (
+        "Loading books..."
+      ) : (
+        <pre>{JSON.stringify(booksRes?.books || [], null, 2)}</pre>
+      )}
+    </Fragment>
+  );
 }
-
-export default App

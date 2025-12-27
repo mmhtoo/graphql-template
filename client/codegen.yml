@@ -1,0 +1,21 @@
+overwrite: true
+schema: "http://localhost:3000/graphql" # Your GraphQL server endpoint
+documents: "src/**/*.{ts,tsx,graphql}" # Where your GraphQL operations are
+generates:
+  src/generated/graphql.ts:
+    plugins:
+      - "typescript"
+      - "typescript-operations"
+      - "typescript-react-apollo"
+    config:
+      withHooks: true
+      withHOC: false
+      withComponent: false
+      skipTypename: false
+      avoidOptionals: false
+      maybeValue: T | null
+      enumsAsTypes: true
+
+  src/generated/introspection.json:
+    plugins:
+      - "introspection"

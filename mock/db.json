@@ -1,49 +1,24 @@
 {
   "books": [
     {
-      "id": "2",
-      "title": "To Kill a Mockingbird",
-      "author": "Harper Lee"
+      "id": "5730",
+      "title": "Book 1",
+      "author": "Author 2"
     },
     {
-      "id": "7108",
-      "title": "Testing One",
-      "author": "Testing Author"
+      "id": "777c",
+      "title": "Book 1",
+      "author": "Author 2"
     },
     {
-      "id": "a82d",
-      "title": "Testing One",
-      "author": "Testing Author"
+      "id": "d21d",
+      "title": "Book 3",
+      "author": "Author 4"
     },
     {
-      "id": "3f5c",
-      "title": "Book title",
-      "author": "Book Author"
-    },
-    {
-      "id": "623f",
-      "title": "Book title",
-      "author": "Book Author"
-    },
-    {
-      "id": "1f6f",
-      "title": "Book title",
-      "author": "Book Author"
-    },
-    {
-      "id": "a0aa",
-      "title": "Book title",
-      "author": "Book Author"
-    },
-    {
-      "id": "b22c",
-      "title": "Book title",
-      "author": "Book Author"
-    },
-    {
-      "id": "b293",
-      "title": "Book title",
-      "author": "Book Author"
+      "id": "17ac",
+      "title": "Book 1",
+      "author": "Author 2"
     }
   ]
 }
